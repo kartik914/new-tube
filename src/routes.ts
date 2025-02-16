@@ -2,7 +2,7 @@
  * An array of routes that are public and do not require authentication.
  * @type {string[]}
  */
-export const publicRoutes: string[] = ["/", "/auth/new-verification"];
+export const publicRoutes: string[] = ["/", "/auth/new-verification", "/feed/trending"];
 
 /**
  * An array of auth routes that are public and do not require authentication.
@@ -26,4 +26,4 @@ export const apiAuthPrefix: string = "/api/auth";
  * Default redirect path after login.
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT: string = "/settings";
+export const DEFAULT_LOGIN_REDIRECT: string = "/";
