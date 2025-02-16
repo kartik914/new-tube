@@ -95,11 +95,19 @@ export const login = async (values: z.infer<typeof LoginSchema>, callbackUrl?: s
   }
 
   try {
-    await signIn("credentials", {
+    const res = await signIn("credentials", {
       email,
       password,
+      redirect: false,
       redirectTo: (callbackUrl || DEFAULT_LOGIN_REDIRECT) + "?dialog=close",
     });
+
+    if (res) {
+      console.log("res", res);
+      return {
+        loggedIn: true,
+      };
+    }
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {

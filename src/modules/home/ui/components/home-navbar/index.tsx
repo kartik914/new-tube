@@ -11,7 +11,7 @@ export const HomeNavbar = () => {
         <SidebarTrigger />
         <Link href="/" className="flex items-center p-4 gap-4 cursor-pointer">
           <Image src={"/logo.svg"} width={32} height={32} alt="Logo" />
-          <span className="text-xl font-semibold tracking-tight">YouTube</span>
+          <span className="text-xl font-semibold tracking-tight">NewTube</span>
         </Link>
       </div>
 

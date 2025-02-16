@@ -15,6 +15,7 @@ import MessageCard from "@/components/message-card";
 import AuthCardWrapper from "./auth-card-wrapper";
 import { openDialog } from "@/redux/features/auth-dialog-slice";
 import { useDispatch } from "react-redux";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 const LoginForm = () => {
   const searchParams = useSearchParams();
@@ -50,6 +51,10 @@ const LoginForm = () => {
     startTransition(() => {
       login(values, callbackUrl || undefined)
         .then((data) => {
+          if (data?.loggedIn) {
+            window.location.href = (callbackUrl || DEFAULT_LOGIN_REDIRECT) + "?dialog=close";
+          }
+
           if (data?.error || data?.success) {
             setFormMessage({
               type: data?.success ? "success" : "error",

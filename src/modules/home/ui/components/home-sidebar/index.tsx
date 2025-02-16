@@ -9,7 +9,6 @@ export const HomeSidebar = () => {
       <SidebarContent className="bg-background">
         <MainSection />
         <Separator />
-
         <PersonalSection />
       </SidebarContent>
     </Sidebar>
