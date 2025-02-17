@@ -23,6 +23,12 @@ export const authRoutes: string[] = [
 export const apiAuthPrefix: string = "/api/auth";
 
 /**
+ * Prefix for public api Routes.
+ * @type {string}
+ */
+export const publicApiRoutePrefix: string = "/api/trpc";
+
+/**
  * Default redirect path after login.
  * @type {string}
  */

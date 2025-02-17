@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import { ReduxProvider } from "@/redux/provider";
 import AuthDialog from "@/modules/auth/ui/auth-dialog";
+import { TRPCProvider } from "@/trpc/client";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,8 +28,10 @@ export default async function RootLayout({
       <html lang="en">
         <body className={`${inter.className} antialiased`}>
           <ReduxProvider>
-            <AuthDialog />
-            {children}
+            <TRPCProvider>
+              <AuthDialog />
+              {children}
+            </TRPCProvider>
           </ReduxProvider>
         </body>
       </html>

@@ -31,6 +31,7 @@ const items = [
     title: "Playlists",
     url: "/playlists",
     icon: ListVideoIcon,
+    auth: true,
   },
 ];
 
