@@ -27,7 +27,7 @@ export const VideoMenu = ({ videoId, variant = "ghost", onRemove }: VideoMenuPro
   const [isOpenAddToPlaylistModel, setIsOpenAddToPlaylistModel] = useState(false);
 
   const onShare = () => {
-    const fullUrl = `${FRONTEND_URL || "http://localhost:3000"}/videos/${videoId}`;
+    const fullUrl = `${FRONTEND_URL}/videos/${videoId}`;
     navigator.clipboard.writeText(fullUrl);
     toast.success("Link copied to clipboard");
   };

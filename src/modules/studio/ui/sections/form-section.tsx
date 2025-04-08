@@ -175,7 +175,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
     update.mutate(data);
   };
 
-  const fullUrl = `${FRONTEND_URL || "http://localhost:3000"}/videos/${video.id}`;
+  const fullUrl = `${FRONTEND_URL}/videos/${video.id}`;
   const [isCopied, setCopied] = useState(false);
 
   const onCopy = async () => {
