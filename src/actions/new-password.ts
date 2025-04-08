@@ -2,7 +2,7 @@
 
 import { getPasswordResetTokenByToken } from "@/data/password-reset-token";
 import { getUserByEmail } from "@/data/user";
-import { NewPasswordSchema } from "@/schemas";
+import { NewPasswordSchema } from "@/schemas/auth-schemas";
 import { z } from "zod";
 import bcryptjs from "bcryptjs";
 import db from "@/lib/db";

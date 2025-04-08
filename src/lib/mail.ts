@@ -1,3 +1,4 @@
+import { FRONTEND_URL } from "@/constants";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -13,7 +14,7 @@ export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
 };
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const confirmationLink = `${process.env.FRONTEND_URL}/auth/new-verification?token=${token}`;
+  const confirmationLink = `${FRONTEND_URL}/auth/new-verification?token=${token}`;
 
   await resend.emails.send({
     from: fromEmail,
@@ -24,7 +25,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 };
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
-  const passwordResetEmail = `${process.env.FRONTEND_URL}/auth/new-password?token=${token}`;
+  const passwordResetEmail = `${FRONTEND_URL}/auth/new-password?token=${token}`;
 
   await resend.emails.send({
     from: fromEmail,

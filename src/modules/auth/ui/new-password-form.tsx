@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import AuthCardWrapper from "./auth-card-wrapper";
 import { z } from "zod";
-import { NewPasswordSchema } from "@/schemas";
+import { NewPasswordSchema } from "@/schemas/auth-schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
 import { newPassword } from "@/actions/new-password";

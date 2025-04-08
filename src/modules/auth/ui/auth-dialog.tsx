@@ -69,7 +69,7 @@ const AuthDialog = () => {
 
     if (formType === "error") {
       //TODO: Add error message
-      return <ErrorCard error="Someting Went Wrong" />;
+      return <ErrorCard error="Something Went Wrong" />;
     }
 
     if (formType === "new-password") {

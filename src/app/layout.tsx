@@ -6,6 +6,8 @@ import { auth } from "@/auth";
 import { ReduxProvider } from "@/redux/provider";
 import AuthDialog from "@/modules/auth/ui/auth-dialog";
 import { TRPCProvider } from "@/trpc/client";
+import { Toaster } from "@/components/ui/sonner";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,6 +33,8 @@ export default async function RootLayout({
             <TRPCProvider>
               <AuthDialog />
               {children}
+              <Toaster />
+              {process.env.NODE_ENV !== "production" && <ReactQueryDevtools initialIsOpen={false} />}
             </TRPCProvider>
           </ReduxProvider>
         </body>

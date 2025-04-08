@@ -8,7 +8,7 @@ import db from "@/lib/db";
 import { sendTwoFactorTokenEmail, sendVerificationEmail } from "@/lib/mail";
 import { generateTwoFactorToken, generateVerificationToken } from "@/lib/tokens";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
-import { LoginSchema } from "@/schemas";
+import { LoginSchema } from "@/schemas/auth-schemas";
 import { AuthError } from "next-auth";
 import { z } from "zod";
 
@@ -103,7 +103,6 @@ export const login = async (values: z.infer<typeof LoginSchema>, callbackUrl?: s
     });
 
     if (res) {
-      console.log("res", res);
       return {
         loggedIn: true,
       };

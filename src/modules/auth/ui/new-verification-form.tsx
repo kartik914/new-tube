@@ -2,10 +2,10 @@
 
 import { useSearchParams } from "next/navigation";
 import AuthCardWrapper from "./auth-card-wrapper";
-import { MoonLoader } from "react-spinners";
 import { useCallback, useEffect, useState } from "react";
 import { newVerification } from "@/actions/new-verification";
 import MessageCard from "@/components/message-card";
+import { Loader2Icon } from "lucide-react";
 
 export const NewVerificationForm = () => {
   const [formMessage, setFormMessage] = useState<{
@@ -50,7 +50,9 @@ export const NewVerificationForm = () => {
       backButtonLabel="Back to Login"
       showSocial={false}
     >
-      <div className="flex items-center w-full justify-center">{!formMessage && <MoonLoader size={24} />}</div>
+      <div className="flex items-center w-full justify-center">
+        {!formMessage && <Loader2Icon className="animate-spin" size={24} />}
+      </div>
       <MessageCard type={formMessage?.type} message={formMessage?.message} className="justify-center" />
     </AuthCardWrapper>
   );

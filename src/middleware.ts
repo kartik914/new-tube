@@ -1,6 +1,13 @@
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
-import { apiAuthPrefix, authRoutes, DEFAULT_LOGIN_REDIRECT, publicApiRoutePrefix, publicRoutes } from "./routes";
+import {
+  apiAuthPrefix,
+  authRoutes,
+  DEFAULT_LOGIN_REDIRECT,
+  publicApiRoutePrefix,
+  publicRoutes,
+  publicVideoRoutes,
+} from "./routes";
 
 const { auth } = NextAuth(authConfig);
 
@@ -12,6 +19,18 @@ export default auth((req) => {
   const isPublicApiRoute = nextUrl.pathname.startsWith(publicApiRoutePrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+  let isVideoRoute = false;
+
+  for (const route of publicVideoRoutes) {
+    if (nextUrl.pathname.startsWith(route)) {
+      isVideoRoute = true;
+      break;
+    }
+  }
+
+  if (isVideoRoute) {
+    return;
+  }
 
   if (isApiAuthRoute) {
     return;

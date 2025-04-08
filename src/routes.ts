@@ -4,6 +4,8 @@
  */
 export const publicRoutes: string[] = ["/", "/auth/new-verification", "/feed/trending"];
 
+export const publicVideoRoutes: string[] = ["/videos"];
+
 /**
  * An array of auth routes that are public and do not require authentication.
  * @type {string[]}
@@ -26,7 +28,7 @@ export const apiAuthPrefix: string = "/api/auth";
  * Prefix for public api Routes.
  * @type {string}
  */
-export const publicApiRoutePrefix: string = "/api/trpc";
+export const publicApiRoutePrefix: string = "/api";
 
 /**
  * Default redirect path after login.

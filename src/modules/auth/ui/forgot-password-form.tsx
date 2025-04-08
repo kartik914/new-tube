@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import AuthCardWrapper from "./auth-card-wrapper";
 import { z } from "zod";
-import { ResetSchema } from "@/schemas";
+import { ResetSchema } from "@/schemas/auth-schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";

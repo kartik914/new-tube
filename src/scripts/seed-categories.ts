@@ -19,7 +19,6 @@ const categoryNames = [
 
 async function main() {
   try {
-    console.log("Seeding categories");
 
     const values = categoryNames.map((name) => ({ name, description: `Videos related to ${name.toLowerCase()}` }));
     await db.category.createMany({

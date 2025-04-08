@@ -12,6 +12,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { openDialog } from "@/redux/features/auth-dialog-slice";
 import { HistoryIcon, ListVideoIcon, ThumbsUpIcon } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useDispatch } from "react-redux";
 
 const items = [
@@ -38,6 +39,7 @@ const items = [
 export const PersonalSection = () => {
   const { isLoggedIn } = useAuth();
   const dispatch = useDispatch();
+  const pathname = usePathname();
 
   return (
     <SidebarGroup>
@@ -49,7 +51,7 @@ export const PersonalSection = () => {
               <SidebarMenuButton
                 tooltip={item.title}
                 asChild
-                isActive={false}
+                isActive={pathname === item.url}
                 onClick={(e) => {
                   if (!isLoggedIn && item.auth) {
                     e.preventDefault();

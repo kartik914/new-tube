@@ -8,17 +8,17 @@ import { openDialog } from "@/redux/features/auth-dialog-slice";
 
 interface LoginButtonProps {
   children: React.ReactNode;
-  rediredtTo?: string;
+  redirectTo?: string;
 }
 
-const LoginButton = ({ children, rediredtTo }: LoginButtonProps) => {
+const LoginButton = ({ children, redirectTo }: LoginButtonProps) => {
   const router = useRouter();
   const user = useCurrentUser();
   const dispatch = useDispatch();
 
   const onLoginDialogClick = () => {
     if (user) {
-      router.push(rediredtTo || DEFAULT_LOGIN_REDIRECT);
+      router.push(redirectTo || DEFAULT_LOGIN_REDIRECT);
     } else {
       dispatch(openDialog("login"));
     }

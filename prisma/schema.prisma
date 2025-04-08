@@ -18,13 +18,25 @@ enum UserRole {
   ADMIN
 }
 
+enum VideoVisibility {
+  PUBLIC
+  PRIVATE
+}
+
+enum ReactionType {
+  LIKE
+  DISLIKE
+}
+
 model User {
   id                    String                 @id @default(cuid())
-  name                  String?
+  name                  String
   username              String?                @unique
   email                 String?                @unique
   emailVerified         DateTime?
   image                 String?
+  bannerImage           String?
+  bannerImageKey        String?
   password              String?
   role                  UserRole               @default(USER)
   isTwoFactorEnabled    Boolean?               @default(false)
@@ -33,8 +45,16 @@ model User {
   // Optional for WebAuthn support
   Authenticator         Authenticator[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  Video            Video[]
+  VideoViews       VideoViews[]
+  VideoReactions   VideoReactions[]
+  subscriptions    Subscription[]     @relation("ViewerRelation")
+  subscribers      Subscription[]     @relation("CreatorRelation")
+  Comments         Comments[]
+  commentReactions commentReactions[]
+  Playlists        Playlists[]
 }
 
 model Account {
@@ -118,6 +138,133 @@ model Category {
   description String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  Video       Video[]
 
   @@index([name])
+}
+
+model Video {
+  id             String           @id @default(cuid())
+  title          String
+  description    String?          @db.Text
+  muxStatus      String
+  muxAssetId     String?          @unique
+  muxUploadId    String?          @unique
+  muxPlaybackId  String?          @unique
+  muxTrackId     String?          @unique
+  muxTrackStatus String?
+  url            String
+  thumbnailUrl   String?
+  thumbnailKey   String?
+  previewUrl     String?
+  previewKey     String?
+  duration       Int              @default(0)
+  visibility     VideoVisibility  @default(PRIVATE)
+  categoryId     String?
+  category       Category?        @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  userId         String
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  VideoViews     VideoViews[]
+  VideoReactions VideoReactions[]
+  Comments       Comments[]
+  PlaylistVideos PlaylistVideos[]
+
+  @@index([title])
+  @@index([categoryId])
+  @@index([userId])
+}
+
+model VideoViews {
+  id        String   @id @default(cuid())
+  videoId   String
+  userId    String
+  video     Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([videoId, userId])
+}
+
+model VideoReactions {
+  id        String       @id @default(cuid())
+  videoId   String
+  userId    String
+  type      ReactionType
+  video     Video        @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@unique([videoId, userId])
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  viewerId  String
+  creatorId String
+  viewer    User     @relation("ViewerRelation", fields: [viewerId], references: [id], onDelete: Cascade)
+  creator   User     @relation("CreatorRelation", fields: [creatorId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([viewerId, creatorId])
+}
+
+model Comments {
+  id               String             @id @default(cuid())
+  videoId          String
+  userId           String
+  parentId         String?
+  parent           Comments?          @relation("ParentComment", fields: [parentId], references: [id], onDelete: Cascade)
+  comment          String             @db.Text
+  video            Video              @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  commentReactions commentReactions[]
+  replies          Comments[]         @relation("ParentComment")
+
+  @@index([videoId])
+}
+
+model commentReactions {
+  id        String       @id @default(cuid())
+  commentId String
+  userId    String
+  type      ReactionType
+  comment   Comments     @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@unique([commentId, userId])
+  @@index([commentId])
+}
+
+model Playlists {
+  id             String           @id @default(cuid())
+  name           String
+  description    String?
+  userId         String
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  PlaylistVideos PlaylistVideos[]
+
+  @@index([userId])
+}
+
+model PlaylistVideos {
+  id         String    @id @default(cuid())
+  playlistId String
+  videoId    String
+  playlist   Playlists @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+  video      Video     @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@unique([playlistId, videoId])
 }
